@@ -60,13 +60,10 @@ int getVal(std::string_view text, int max)
             continue;
         }
 
-        if (std::cin)
-        {
-            if (val > 0 && val <= max)
-                return val;
-            else
-                std::cerr << "Error. Input out of range.\n";
-        }
+        if (val > 0 && val <= max)
+            return val;
+        else
+            std::cerr << "Error. Input out of range.\n";
     }
 }
 
