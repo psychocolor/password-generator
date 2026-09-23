@@ -10,10 +10,13 @@ void saveToFile(const std::vector<std::string>& data, std::string filename)
     std::ofstream File(filename);
     for (int i{0}; i < data.size(); ++i)
     {
-        File << data[i] << '\n';
+        if (i + 1 == data.size())
+            File << data[i];
+        else
+            File << data[i] << '\n';
     }
 
-    std::cout << "Password(s) generated, check output.txt\n";
+    std::cout << "Password(s) generated, check " << filename << '\n';
 
     File.close();
 }
@@ -27,7 +30,7 @@ std::vector<std::string> generator(int amount, int length)
 
     std::vector<std::string> passwords{};
 
-    for (int i{i}; i<=amount; ++i)
+    for (int i{1}; i<=amount; ++i)
     {
         std::string password{};
         for (int i{1}; i<=length; ++i)
@@ -96,7 +99,10 @@ int getLength()
 
 int main()
 {
-    
+    int amount{getAmount()};
+    int length{getLength()};
+    std::vector<std::string> passwords{generator(amount, length)};
+    saveToFile(passwords, "output.txt");
 
     return 0;
 }
