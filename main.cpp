@@ -1,8 +1,22 @@
 #include <iostream>
 #include <limits>
 #include <random>
+#include <fstream>
 #include <vector>
 #include <string>
+
+void saveToFile(const std::vector<std::string>& data, std::string filename)
+{
+    std::ofstream File(filename);
+    for (int i{0}; i < data.size(); ++i)
+    {
+        File << data[i] << '\n';
+    }
+
+    std::cout << "Password(s) generated, check output.txt\n";
+
+    File.close();
+}
 
 std::vector<std::string> generator(int amount, int length)
 {
