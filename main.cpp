@@ -4,6 +4,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <string_view>
 
 void saveToFile(const std::vector<std::string>& data, std::string filename)
 {
@@ -43,64 +44,37 @@ std::vector<std::string> generator(int amount, int length)
     return passwords;
 }
 
-int getAmount()
+int getVal(std::string_view text, int max)
 {
     while (true)
     {
-        const int maxAmount{100};
-        std::cout << "Enter amount of passwords to generate (max. " << maxAmount << "): ";
-        int amount{};
-        std::cin >> amount;
+        std::cout << "Enter " << text << "(max. " << max << "): ";
+        int val{};
+        std::cin >> val;
 
         if (std::cin.fail() || std::cin.peek() != '\n')
         {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "Error. Invalid character\n";
+            std::cerr << "Error. Invalid input\n";
             continue;
         }
 
         if (std::cin)
         {
-            if (amount > 0 && amount <= maxAmount)
-                return amount;
+            if (val > 0 && val <= max)
+                return val;
             else
-                std::cerr << "Error. Amount out of range.\n";
-        }
-    }
-}
-
-int getLength()
-{
-    while (true)
-    {
-        const int maxLength{50};
-        std::cout << "Enter desired length of each password (max. " << maxLength << "): ";
-        int length{};
-        std::cin >> length;
-
-        if (std::cin.fail() || std::cin.peek() != '\n')
-        {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "Error. Invalid character\n";
-            continue;
-        }
-
-        if (std::cin)
-        {
-            if (length > 0 && length <= maxLength)
-                return length;
-            else
-                std::cerr << "Error. Amount out of range.\n";
+                std::cerr << "Error. Input out of range.\n";
         }
     }
 }
 
 int main()
 {
-    int amount{getAmount()};
-    int length{getLength()};
+    int amount{getVal("amount of passwords to generate ", 100)};
+    int length{getVal("desired length of each password ", 50)};
+
     std::vector<std::string> passwords{generator(amount, length)};
     saveToFile(passwords, "output.txt");
 
