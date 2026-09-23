@@ -40,8 +40,63 @@ std::vector<std::string> generator(int amount, int length)
     return passwords;
 }
 
+int getAmount()
+{
+    while (true)
+    {
+        const int maxAmount{100};
+        std::cout << "Enter amount of passwords to generate (max. " << maxAmount << "): ";
+        int amount{};
+        std::cin >> amount;
+
+        if (std::cin.fail() || std::cin.peek() != '\n')
+        {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Error. Invalid character\n";
+            continue;
+        }
+
+        if (std::cin)
+        {
+            if (amount > 0 && amount <= maxAmount)
+                return amount;
+            else
+                std::cerr << "Error. Amount out of range.\n";
+        }
+    }
+}
+
+int getLength()
+{
+    while (true)
+    {
+        const int maxLength{50};
+        std::cout << "Enter desired length of each password (max. " << maxLength << "): ";
+        int length{};
+        std::cin >> length;
+
+        if (std::cin.fail() || std::cin.peek() != '\n')
+        {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Error. Invalid character\n";
+            continue;
+        }
+
+        if (std::cin)
+        {
+            if (length > 0 && length <= maxLength)
+                return length;
+            else
+                std::cerr << "Error. Amount out of range.\n";
+        }
+    }
+}
+
 int main()
 {
     
+
     return 0;
 }
